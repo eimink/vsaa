@@ -108,6 +108,7 @@ namespace vsaa
 				headers.Add("Authorization", "Bearer "+appToken);
 				form.AddField("Description","Application start");
 				form.AddField("ApiKey",apiKey);
+				form.AddField("DeviceId",SystemInfo.deviceUniqueIdentifier);
 				www = new WWW(url, form.data, headers);
 				break;
 			case messageType.APPLICATION_EVENT_QUIT:
@@ -115,6 +116,7 @@ namespace vsaa
 				headers.Add("Authorization", "Bearer "+appToken);
 				form.AddField("Description","Application quit");
 				form.AddField("ApiKey",apiKey);
+				form.AddField("DeviceId",SystemInfo.deviceUniqueIdentifier);
 				www = new WWW(url, form.data, headers);
 				break;
 			case messageType.APPLICATION_EVENT_PAUSED:
@@ -122,6 +124,7 @@ namespace vsaa
 				headers.Add("Authorization", "Bearer "+appToken);
 				form.AddField("Description","Application paused");
 				form.AddField("ApiKey",apiKey);
+				form.AddField("DeviceId",SystemInfo.deviceUniqueIdentifier);
 				www = new WWW(url, form.data, headers);
 				break;
 			case messageType.APPLICATION_EVENT_GENERIC:
@@ -129,6 +132,7 @@ namespace vsaa
 				headers.Add("Authorization", "Bearer "+appToken);
 				form.AddField("Description",content);
 				form.AddField("ApiKey",apiKey);
+				form.AddField("DeviceId",SystemInfo.deviceUniqueIdentifier);
 				www = new WWW(url, form.data, headers);
 				break;
 			default:
