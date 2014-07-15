@@ -24,21 +24,33 @@ namespace vsaa
 		public string platformStatus;
 
 		private string appToken;
+		private bool allowQuit = false;
 
 		void Start () {
 			Authenticate(); // Automatically tries to authenticate with server when the script is run.
 		}
 
-
+		/// <summary>
+		/// Raises the application quit event. The quit will be delayed until the application quit event has been sent to the server.
+		/// This is only supported by standalone players, so for webplayer build further trickery is needed.
+		/// </summary>
 		void OnApplicationQuit()
 		{
+			if (!allowQuit)
+			{
+				Application.CancelQuit();
+			}
 			StartCoroutine(SendRequest(messageType.APPLICATION_EVENT_QUIT,"",delegate(string retval){
 				if (Application.isEditor)
 					Debug.Log(retval);
 				platformStatus = "OK!";
+				allowQuit = true;
+				Application.Quit();
 			}));
 		}
-
+		/// <summary>
+		/// Raises the application paused event. This is mostly used on iOS, since when game is sent to background this gets triggered.
+		/// </summary>
 		void OnApplicationPaused()
 		{
 			StartCoroutine(SendRequest(messageType.APPLICATION_EVENT_PAUSED,"",delegate(string retval){
