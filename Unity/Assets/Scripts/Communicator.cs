@@ -100,12 +100,15 @@ namespace vsaa
 			case messageType.SERVER_AUTH:
 				url += "login";
 				form.AddField("grant_type","client_credentials");
+				form.AddField("message_type",type.ToString());
+				form.AddField("DeviceId",SystemInfo.deviceUniqueIdentifier);
 				headers.Add("Authorization", "Basic "+CreateAuthString());
 				www = new WWW(url, form.data, headers);
 				break;
 			case messageType.APPLICATION_EVENT_START:
 				url += "event";
 				headers.Add("Authorization", "Bearer "+appToken);
+				form.AddField("message_type",type.ToString());
 				form.AddField("Description","Application start");
 				form.AddField("ApiKey",apiKey);
 				form.AddField("DeviceId",SystemInfo.deviceUniqueIdentifier);
@@ -114,6 +117,7 @@ namespace vsaa
 			case messageType.APPLICATION_EVENT_QUIT:
 				url += "event";
 				headers.Add("Authorization", "Bearer "+appToken);
+				form.AddField("message_type",type.ToString());
 				form.AddField("Description","Application quit");
 				form.AddField("ApiKey",apiKey);
 				form.AddField("DeviceId",SystemInfo.deviceUniqueIdentifier);
@@ -122,6 +126,7 @@ namespace vsaa
 			case messageType.APPLICATION_EVENT_PAUSED:
 				url += "event";
 				headers.Add("Authorization", "Bearer "+appToken);
+				form.AddField("message_type",type.ToString());
 				form.AddField("Description","Application paused");
 				form.AddField("ApiKey",apiKey);
 				form.AddField("DeviceId",SystemInfo.deviceUniqueIdentifier);
@@ -130,14 +135,17 @@ namespace vsaa
 			case messageType.APPLICATION_EVENT_GENERIC:
 				url += "event";
 				headers.Add("Authorization", "Bearer "+appToken);
+				form.AddField("message_type",type.ToString());
 				form.AddField("Description",content);
 				form.AddField("ApiKey",apiKey);
 				form.AddField("DeviceId",SystemInfo.deviceUniqueIdentifier);
 				www = new WWW(url, form.data, headers);
 				break;
 			default:
-				url += "token";
+				url += "login";
 				form.AddField("grant_type","client_credentials");
+				form.AddField("message_type",type.ToString());
+				form.AddField("DeviceId",SystemInfo.deviceUniqueIdentifier);
 				headers.Add("Authorization", "Basic "+CreateAuthString());
 				www = new WWW(url, form.data, headers);
 				break;
