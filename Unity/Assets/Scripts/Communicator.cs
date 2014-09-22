@@ -94,7 +94,7 @@ namespace vsaa
 			string url = serverUrl;
 			WWW www;
 			WWWForm form = new WWWForm();
-			var headers = new Hashtable();
+			var headers = new Dictionary<string,string>();
 			switch (type)
 			{
 			case messageType.SERVER_AUTH:
